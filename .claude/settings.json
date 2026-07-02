@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build *)",
+      "Bash(rm -rf \"/c/Users/joao_/AppData/Local/Temp/claude/c--Workspace-CSharp-Iron/556f3b6b-e051-4e7c-ab36-2c767c64ee00/scratchpad/entitytest\")"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\joao_\\AppData\\Local\\Temp\\claude\\c--Workspace-CSharp-Iron\\556f3b6b-e051-4e7c-ab36-2c767c64ee00\\scratchpad\\entitytest"
+    ]
+  }
+}
