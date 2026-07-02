@@ -1,3 +1,5 @@
+using Iron.Domain.Repositories;
+using Iron.Infra.Repositories;
 using Iron.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +18,8 @@ public static class InfrastructureExtensions
             options.UseNpgsql(
                 configuration.GetConnectionString("DefaultConnection"));
         });
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
