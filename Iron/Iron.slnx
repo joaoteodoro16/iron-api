@@ -1,1 +1,11 @@
-<Solution />
+<Solution>
+  <Folder Name="/docs/">
+    <File Path="ROADMAP.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="Iron.API/Iron.Api.csproj" />
+    <Project Path="Iron.Aplication/Iron.Aplication.csproj" />
+    <Project Path="Iron.Domain/Iron.Domain.csproj" />
+    <Project Path="Iron.Infra/Iron.Infra.csproj" />
+  </Folder>
+</Solution>
