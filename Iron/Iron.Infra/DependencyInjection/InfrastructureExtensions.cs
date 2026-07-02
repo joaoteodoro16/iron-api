@@ -1,5 +1,7 @@
 using Iron.Domain.Repositories;
+using Iron.Domain.Security;
 using Iron.Infra.Repositories;
+using Iron.Infra.Security;
 using Iron.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,8 @@ public static class InfrastructureExtensions
         });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
         return services;
     }

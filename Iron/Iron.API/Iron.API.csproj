@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Iron.Infra\Iron.Infra.csproj" />
+    <ProjectReference Include="..\Iron.Aplication\Iron.Aplication.csproj" />
   </ItemGroup>
 
 </Project>
