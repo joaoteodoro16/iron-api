@@ -17,4 +17,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Iron.Infra\Iron.Infra.csproj" />
+  </ItemGroup>
+
 </Project>
