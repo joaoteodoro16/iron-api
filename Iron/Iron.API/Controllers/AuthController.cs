@@ -18,9 +18,6 @@ public class AuthController(CreateUserUsecase createUserUsecase) : ControllerBas
     {
         var result = await _createUserUsecase.ExecuteAsync(request);
 
-        if (result.IsFailure)
-            return BadRequest(result.ToApiResponse());
-
-        return Ok(result.ToApiResponse("Usuário criado com sucesso."));
+        return result.ToActionResult();
     }
 }

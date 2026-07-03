@@ -37,7 +37,8 @@
       "Bash(tail -60 /tmp/iron-api3.log)",
       "Read(//tmp/**)",
       "Bash(openssl rand *)",
-      "Bash(dotnet remove *)"
+      "Bash(dotnet remove *)",
+      "Bash(curl -s -w \"\\\\nHTTP %{http_code}\\\\n\" http://localhost:5144/api/auth/register -X POST -H \"Content-Type: application/json\" -d '{\"firstName\":\"\",\"lastName\":\"Teodoro\",\"email\":\"\",\"password\":\"123\",\"phoneNumber\":\"\"}')"
     ],
     "additionalDirectories": [
       "C:\\Users\\joao_\\AppData\\Local\\Temp\\claude\\c--Workspace-CSharp-Iron\\556f3b6b-e051-4e7c-ab36-2c767c64ee00\\scratchpad\\entitytest",
