@@ -1,4 +1,4 @@
-﻿namespace Iron.Tests;
+﻿namespace Iron.Domain.Tests;
 
 public class UnitTest1
 {

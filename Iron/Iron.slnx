@@ -3,12 +3,14 @@
     <File Path="ROADMAP.md" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="Iron.API/Iron.Api.csproj" />
-    <Project Path="Iron.Aplication/Iron.Aplication.csproj" />
-    <Project Path="Iron.Domain/Iron.Domain.csproj" />
-    <Project Path="Iron.Infra/Iron.Infra.csproj" />
+    <Project Path="src/Iron.API/Iron.Api.csproj" />
+    <Project Path="src/Iron.Aplication/Iron.Aplication.csproj" />
+    <Project Path="src/Iron.Domain/Iron.Domain.csproj" />
+    <Project Path="src/Iron.Infra/Iron.Infra.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="Iron.Tests/Iron.Tests.csproj" />
+    <Project Path="tests/Iron.Aplication.Tests/Iron.Aplication.Tests.csproj" />
+    <Project Path="tests/Iron.Domain.Tests/Iron.Domain.Tests.csproj" />
+    <Project Path="tests/Iron.Integration.Tests/Iron.Integration.Tests.csproj" />
   </Folder>
 </Solution>

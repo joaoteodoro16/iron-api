@@ -19,8 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Iron.Domain\Iron.Domain.csproj" />
-    <ProjectReference Include="..\Iron.Aplication\Iron.Aplication.csproj" />
+    <ProjectReference Include="..\..\src\Iron.Domain\Iron.Domain.csproj" />
   </ItemGroup>
 
 </Project>
