@@ -8,4 +8,7 @@
     <Project Path="Iron.Domain/Iron.Domain.csproj" />
     <Project Path="Iron.Infra/Iron.Infra.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="Iron.Tests/Iron.Tests.csproj" />
+  </Folder>
 </Solution>
