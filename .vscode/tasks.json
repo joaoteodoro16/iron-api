@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Iron/Iron.API/Iron.Api.csproj",
+                "${workspaceFolder}/Iron/src/Iron.API/Iron.Api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

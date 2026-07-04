@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Iron/Iron.API/bin/Debug/net10.0/Iron.Api.dll",
+            "program": "${workspaceFolder}/Iron/src/Iron.API/bin/Debug/net10.0/Iron.Api.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Iron/Iron.API",
+            "cwd": "${workspaceFolder}/Iron/src/Iron.API",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
