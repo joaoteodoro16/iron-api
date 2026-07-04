@@ -2,6 +2,13 @@ namespace Iron.Domain.Tests.Entities.User;
 
 public class UserCreateTests
 {
+    //for when I can have more than one option for the same test
+    // [Theory]
+    // [InlineData("Carro1")]
+    // [InlineData("Carro2")]
+    // public void Create_GivenAllParameters_ThenShouldSetThePropertiesCorrectly(string expectedCarName);
+
+
     [Fact]
     public void Create_GivenValidParameters_ShouldCreateUser()
     {
