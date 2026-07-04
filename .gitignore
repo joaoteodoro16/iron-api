@@ -480,3 +480,27 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# ---------------------------------------------------------------------------
+# Secrets & environment-specific configuration (Iron)
+# ---------------------------------------------------------------------------
+# Environment override files may contain credentials/secrets — keep them local.
+appsettings.Development.json
+appsettings.Production.json
+appsettings.*.local.json
+appsettings.local.json
+
+# Environment variable files
+.env
+.env.*
+!.env.example
+
+# .NET user secrets / certificates / keys
+secrets.json
+*.pfx
+*.p12
+*.key
+*.pem
+
+# Claude Code local config
+.claude/
