@@ -32,14 +32,8 @@ public class User : BaseEntity
 
     public static User Create(string firstName, string lastName, Email email, string passwordHash, PhoneNumber phoneNumber, bool isPlatformAdmin = false)
     {
-        if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentException("Nome não pode ser vazio.", nameof(firstName));
-
-        if (string.IsNullOrWhiteSpace(lastName))
-            throw new ArgumentException("Sobrenome não pode ser vazio.", nameof(lastName));
-
-        if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new ArgumentException("Hash de senha não pode ser vazio.", nameof(passwordHash));
+        ValidateName(firstName, lastName);
+        ValidatePasswordHash(passwordHash);
 
         ArgumentNullException.ThrowIfNull(email);
         ArgumentNullException.ThrowIfNull(phoneNumber);
@@ -49,11 +43,7 @@ public class User : BaseEntity
 
     public void UpdateProfile(string firstName, string lastName, PhoneNumber phoneNumber)
     {
-        if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentException("Nome não pode ser vazio.", nameof(firstName));
-
-        if (string.IsNullOrWhiteSpace(lastName))
-            throw new ArgumentException("Sobrenome não pode ser vazio.", nameof(lastName));
+        ValidateName(firstName, lastName);
 
         ArgumentNullException.ThrowIfNull(phoneNumber);
 
@@ -80,8 +70,7 @@ public class User : BaseEntity
 
     public void ChangePassword(string passwordHash)
     {
-        if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new ArgumentException("Hash de senha não pode ser vazio.", nameof(passwordHash));
+        ValidatePasswordHash(passwordHash);
 
         PasswordHash = passwordHash;
         Touch();
@@ -114,5 +103,20 @@ public class User : BaseEntity
     {
         IsPlatformAdmin = false;
         Touch();
+    }
+
+    private static void ValidateName(string firstName, string lastName)
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+            throw new ArgumentException("Nome não pode ser vazio.", nameof(firstName));
+
+        if (string.IsNullOrWhiteSpace(lastName))
+            throw new ArgumentException("Sobrenome não pode ser vazio.", nameof(lastName));
+    }
+
+    private static void ValidatePasswordHash(string passwordHash)
+    {
+        if (string.IsNullOrWhiteSpace(passwordHash))
+            throw new ArgumentException("Hash de senha não pode ser vazio.", nameof(passwordHash));
     }
 }
