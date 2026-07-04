@@ -63,7 +63,7 @@ Iron/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-user>/Iron.git
+git clone https://github.com/joaoteodoro16/Iron.git
 cd Iron
 ```
 
