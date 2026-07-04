@@ -1,6 +1,9 @@
+using AwesomeAssertions;
+using Xunit.Abstractions;
+
 namespace Iron.Domain.Tests.Entities.User;
 
-public class UserCreateTests
+public class UserCreateTests(ITestOutputHelper testOutputHelper)
 {
     //for when I can have more than one option for the same test
     // [Theory]
@@ -8,6 +11,9 @@ public class UserCreateTests
     // [InlineData("Carro2")]
     // public void Create_GivenAllParameters_ThenShouldSetThePropertiesCorrectly(string expectedCarName);
 
+    //For generante randon values, use Bogus/Faker
+    //Example: pivate readonly Faker  _faker = new("pt_BR);
+    //var expectedCarName = _fakes.Vehicle.Model();
 
     [Fact]
     public void Create_GivenValidParameters_ShouldCreateUser()
@@ -33,10 +39,35 @@ public class UserCreateTests
     }
 
     [Fact]
+    [Trait("Approach", "FluentAssertions")]
+    public void FluentAssertionsCreate_GivenValidParameters_ShouldCreateUser()
+    {
+        //Given all parameters
+        var expectedData = UserTestData.GetValidParameters();
+
+        // Act
+        var user = Domain.Entities.User.Create(expectedData.FirstName, expectedData.LastName, expectedData.Email, expectedData.PasswordHash, expectedData.PhoneNumber, expectedData.IsPlatformAdmin);
+
+        // Assert
+        user.FirstName.Should().Be(expectedData.FirstName, "Should be equal");
+        user.LastName.Should().Be(expectedData.LastName);
+        user.Email.Value.Should().Be(user.Email.Value);
+        user.PasswordHash.Should().Be(expectedData.PasswordHash);
+        user.PhoneNumber.Should().Be(expectedData.PhoneNumber);
+        user.IsPlatformAdmin.Should().BeFalse();
+        user.IsActive.Should().BeTrue();
+        user.LastLoginAt.Should().BeNull("Should be Null");
+        user.Memberships.Should().BeEmpty();
+        user.RefreshTokens.Should().BeEmpty();
+        user.EmailConfirmed.Should().BeFalse();
+    }
+
+    [Fact]
     public void Create_GivenEmptyFirstName_ShouldThrowArgumentException()
     {
         var expectedData = UserTestData.GetValidParameters();
         expectedData.FirstName = string.Empty;
+        testOutputHelper.WriteLine(expectedData.FirstName);
 
         Assert.Throws<ArgumentException>(() => Domain.Entities.User.Create(expectedData.FirstName, expectedData.LastName, expectedData.Email,
         expectedData.PasswordHash, expectedData.PhoneNumber, expectedData.IsPlatformAdmin));
