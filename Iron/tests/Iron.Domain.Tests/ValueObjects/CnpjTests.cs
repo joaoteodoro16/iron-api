@@ -10,9 +10,8 @@ public class CnpjTests
     [Fact]
     public void Create_GivenValidCnpj_ShouldCreateCnpj()
     {
-        var expectedCnpj = "76466554000140";
-        var actual = Cnpj.Create(expectedCnpj);
-        Assert.Equal(expectedCnpj, actual.Value);
+        var actual = Cnpj.Create(NormalizedCnpj);
+        Assert.Equal(NormalizedCnpj, actual.Value);
     }
 
     [Fact]
@@ -22,21 +21,30 @@ public class CnpjTests
         Assert.Equal(NormalizedCnpj, actual.Value);
     }
 
-    [Fact]
-    public void Create_GivenNullCnpj_ShouldThrowArgumentException()
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData(null)]
+    public void Create_GivenEmptyOrNullCnpj_ShouldThrowArgumentException(string? invalidCnpj)
     {
-        Assert.Throws<ArgumentException>(() => Cnpj.Create(null!));
+        Assert.Throws<ArgumentException>(() => Cnpj.Create(invalidCnpj!));
     }
 
     [Fact]
     public void Create_GivenInvalidLength_ShouldThrowArgumentException()
     {
-        //Missing two numbers
+        //Faltam dois dígitos.
         Assert.Throws<ArgumentException>(() => Cnpj.Create("764665540001"));
     }
 
     [Fact]
     public void Create_GivenInvalidCheckDigits_ShouldThrowArgumentException()
+    {
+        Assert.Throws<ArgumentException>(() => Cnpj.Create("76466554000141"));
+    }
+
+    [Fact]
+    public void Create_GivenRepeatedDigits_ShouldThrowArgumentException()
     {
         Assert.Throws<ArgumentException>(() => Cnpj.Create("99999999999999"));
     }
@@ -44,16 +52,14 @@ public class CnpjTests
     [Fact]
     public void GetFormatted_WhenCalled_ShouldReturnFormattedCnpj()
     {
-        var cnpj = Cnpj.Create(NormalizedCnpj);
-        var formatted = cnpj.GetFormatted();
+        var formatted = Cnpj.Create(NormalizedCnpj).GetFormatted();
         Assert.Equal(FormattedCnpj, formatted);
     }
 
     [Fact]
     public void ToString_WhenCalled_ShouldReturnNormalizedValue()
     {
-        var cnpj = Cnpj.Create(FormattedCnpj);
-        var value = cnpj.ToString();
+        var value = Cnpj.Create(FormattedCnpj).ToString();
         Assert.Equal(NormalizedCnpj, value);
     }
 }
