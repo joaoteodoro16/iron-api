@@ -30,6 +30,7 @@ public class CreateUserUsecase(
             return Result.Fail<long>(emailResult.Error, emailResult.ErrorType, "Email inválido");
 
         var phoneResult = Result.Try(() => PhoneNumber.Create(request.PhoneNumber));
+
         if (phoneResult.IsFailure)
             return Result.Fail<long>(phoneResult.Error, phoneResult.ErrorType, "Número de telefone inválido");
 

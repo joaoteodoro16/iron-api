@@ -57,6 +57,10 @@ public class Result
         {
             return Fail<T>(ex.Message, ErrorType.Conflict);
         }
+        catch (Exception ex)
+        {
+            return Fail<T>(ex.Message, ErrorType.Failure);
+        }
     }
 
     private static string DefaultMessageFor(IReadOnlyList<string> errors, ErrorType errorType)
