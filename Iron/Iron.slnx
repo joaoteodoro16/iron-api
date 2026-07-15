@@ -11,5 +11,6 @@
   <Folder Name="/tests/">
     <Project Path="tests/Iron.Aplication.Tests/Iron.Aplication.Tests.csproj" />
     <Project Path="tests/Iron.Domain.Tests/Iron.Domain.Tests.csproj" />
+    <Project Path="tests/Iron.Infra.Tests/Iron.Infra.Tests.csproj" />
   </Folder>
 </Solution>
