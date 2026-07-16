@@ -5,7 +5,7 @@ using Iron.Aplication.Usecases.Auth;
 using Iron.Domain.Common;
 using Iron.Domain.Entities;
 using Iron.Domain.Repositories;
-using Iron.Domain.Security;
+using Iron.Aplication.Services;
 using Iron.Domain.ValueObjects;
 using NSubstitute;
 

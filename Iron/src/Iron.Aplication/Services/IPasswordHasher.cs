@@ -1,4 +1,4 @@
-namespace Iron.Domain.Security;
+namespace Iron.Aplication.Services;
 
 public interface IPasswordHasher
 {
