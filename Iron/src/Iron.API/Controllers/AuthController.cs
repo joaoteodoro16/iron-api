@@ -33,13 +33,11 @@ public class AuthController(CreateUserUsecase createUserUsecase, AuthUserUsecase
         return result.ToActionResult();
     }
 
+    [AllowAnonymous]
     [HttpPost("refresh-token")]
-    public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
     {
-        var result = await _refreshTokenUsecase.ExecuteAsync(refreshToken);
+        var result = await _refreshTokenUsecase.ExecuteAsync(request.RefreshToken);
         return result.ToActionResult();
     }
-
-    [HttpGet("teste")]
-    public string Get() => "Testando JWT";
 }

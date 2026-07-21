@@ -7,5 +7,6 @@ public record AuthUserResponse(
     string Email,
     bool EmailConfirmed,
     bool IsPlatformAdmin,
-    string AccessToken
+    string AccessToken,
+    string refreshToken
 );

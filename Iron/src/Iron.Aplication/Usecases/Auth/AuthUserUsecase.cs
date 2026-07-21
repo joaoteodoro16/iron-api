@@ -5,19 +5,32 @@ using Iron.Aplication.DTOs.Auth.Response;
 using Iron.Aplication.Services;
 using Iron.Aplication.Validators;
 using Iron.Domain.Common;
+using Iron.Domain.Entities;
 using Iron.Domain.Repositories;
 using Iron.Domain.ValueObjects;
 
 namespace Iron.Aplication.Usecases.Auth;
 
-public class AuthUserUsecase(ITokenService tokenService, IUserRepository userRepository, IValidator<AuthUserRequest> validator, IPasswordHasher passwordHasher,
-IRefreshTokenRepository refreshTokenRepository)
+public class AuthUserUsecase
 {
-    private readonly ITokenService _tokenService = tokenService;
-    private readonly IUserRepository _userRepository = userRepository;
-    private readonly IValidator<AuthUserRequest> _validator = validator;
-    private readonly IPasswordHasher _passwordHasher = passwordHasher;
-    private readonly IRefreshTokenRepository _refreshTokenRepository = refreshTokenRepository;
+    private readonly ITokenService _tokenService;
+    private readonly IUserRepository _userRepository;
+    private readonly IValidator<AuthUserRequest> _validator;
+    private readonly IPasswordHasher _passwordHasher;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public AuthUserUsecase(ITokenService tokenService, IUserRepository userRepository, IValidator<AuthUserRequest> validator, IPasswordHasher passwordHasher,
+        IRefreshTokenRepository refreshTokenRepository, IUnitOfWork unitOfWork)
+    {
+        _tokenService = tokenService;
+        _userRepository = userRepository;
+        _validator = validator;
+        _passwordHasher = passwordHasher;
+        _refreshTokenRepository = refreshTokenRepository;
+        _unitOfWork = unitOfWork;
+    }
+
     public async Task<Result<AuthUserResponse>> ExecuteAsync(AuthUserRequest request)
     {
         var validatorResult = await _validator.ValidateAsync(request);
@@ -38,14 +51,13 @@ IRefreshTokenRepository refreshTokenRepository)
         if (!validPassword)
             return Result.Fail<AuthUserResponse>(AuthMessages.InvalidCredentials, ErrorType.Unauthorized);
 
-        var tokenResult = Result.Try(() => _tokenService.GenerateToken(user));
-        if (tokenResult.IsFailure)
-            return Result.Fail<AuthUserResponse>(AuthMessages.UnexpectedError, ErrorType.Failure);
+        var token = _tokenService.GenerateToken(user);
+        var (refreshToken, refreshExpiresAt) = _tokenService.GenerateRefreshToken();
 
+        await _refreshTokenRepository.AddAsync(RefreshToken.Create(user.Id, refreshToken, refreshExpiresAt));
+        await _unitOfWork.SaveChangesAsync();
 
-
-        var dto = new AuthUserResponse(user.Id, user.FirstName, user.LastName, user.Email.Value, user.EmailConfirmed, user.IsPlatformAdmin, tokenResult.Value);
+        var dto = new AuthUserResponse(user.Id, user.FirstName, user.LastName, user.Email.Value, user.EmailConfirmed, user.IsPlatformAdmin, token, refreshToken);
         return Result.Ok<AuthUserResponse>(dto, AuthMessages.UserAuthenticated);
     }
-
 }
