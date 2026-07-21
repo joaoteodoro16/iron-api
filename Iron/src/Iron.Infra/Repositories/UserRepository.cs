@@ -16,4 +16,10 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
     {
         return await DbSet.AnyAsync(u => u.Email == email);
     }
+
+    public async Task<User?> GetByEmailAsync(Email email)
+    {
+        return await DbSet.FirstOrDefaultAsync(u => u.Email == email);
+    }
+
 }

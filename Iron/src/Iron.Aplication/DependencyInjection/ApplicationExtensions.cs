@@ -12,6 +12,8 @@ public static class ApplicationExtensions
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         services.AddScoped<CreateUserUsecase>();
+        services.AddScoped<AuthUserUsecase>();
+        services.AddScoped<RefreshTokenUsecase>();
 
         return services;
     }

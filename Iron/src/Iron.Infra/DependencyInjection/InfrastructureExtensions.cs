@@ -6,6 +6,7 @@ using Iron.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Iron.Infra.Services;
 
 namespace Iron.Infra.DependencyInjection;
 
@@ -24,6 +25,8 @@ public static class InfrastructureExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
+        services.AddSingleton<ITokenService, BearerJwtTokenService>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         return services;
     }

@@ -1,8 +1,12 @@
+using System.Text;
 using Iron.Aplication.DependencyInjection;
 using Iron.Infra.DependencyInjection;
 using Iron.Infrastructure.Persistence.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Iron.Infra.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +17,15 @@ builder.Services.AddOpenApi();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = TokenHelper.GetTokenValidationParameters(builder.Configuration);
+});
+
 builder.Services.AddAuthorizationBuilder()
     .SetFallbackPolicy(new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
@@ -21,7 +33,6 @@ builder.Services.AddAuthorizationBuilder()
 
 var app = builder.Build();
 
-// Apply pending migrations, creating the database if it doesn't exist yet
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

@@ -1,4 +1,5 @@
 using FluentValidation;
+using Iron.Aplication.Common;
 using Iron.Aplication.DTOs;
 using Iron.Domain.Common;
 using Iron.Domain.Entities;
@@ -23,20 +24,20 @@ public class CreateUserUsecase(
     {
         var validationResult = await _validator.ValidateAsync(request);
         if (!validationResult.IsValid)
-            return Result.Fail<long>(validationResult.Errors.Select(e => e.ErrorMessage).ToList(), ErrorType.Validation, "Existem campos inválidos");
+            return Result.Fail<long>(validationResult.Errors.Select(e => e.ErrorMessage).ToList(), ErrorType.Validation, AuthMessages.InvalidFields);
 
         var emailResult = Result.Try(() => Email.Create(request.Email));
         if (emailResult.IsFailure)
-            return Result.Fail<long>(emailResult.Error, emailResult.ErrorType, "Email inválido");
+            return Result.Fail<long>(emailResult.Error, emailResult.ErrorType, AuthMessages.InvalidEmail);
 
         var phoneResult = Result.Try(() => PhoneNumber.Create(request.PhoneNumber));
 
         if (phoneResult.IsFailure)
-            return Result.Fail<long>(phoneResult.Error, phoneResult.ErrorType, "Número de telefone inválido");
+            return Result.Fail<long>(phoneResult.Error, phoneResult.ErrorType, AuthMessages.InvalidPhoneNumber);
 
         var emailInUse = await _userRepository.ExistsByEmailAsync(emailResult.Value);
         if (emailInUse)
-            return Result.Fail<long>("Já existe um usuário cadastrado com esse email.", ErrorType.Conflict);
+            return Result.Fail<long>(AuthMessages.EmailAlreadyInUse, ErrorType.Conflict);
 
         var passwordHash = _passwordHasher.Hash(request.Password);
 
@@ -50,11 +51,11 @@ public class CreateUserUsecase(
         ));
 
         if (userResult.IsFailure)
-            return Result.Fail<long>(userResult.Error, userResult.ErrorType, "Não foi possível criar o usuário");
+            return Result.Fail<long>(userResult.Error, userResult.ErrorType, AuthMessages.UserCreationFailed);
 
         await _userRepository.AddAsync(userResult.Value);
         await _unitOfWork.SaveChangesAsync();
 
-        return Result.Ok(userResult.Value.Id, "Usuário criado com sucesso.");
+        return Result.Ok(userResult.Value.Id, AuthMessages.UserCreated);
     }
 }
