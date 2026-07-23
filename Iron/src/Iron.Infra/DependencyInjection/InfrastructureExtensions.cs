@@ -27,6 +27,7 @@ public static class InfrastructureExtensions
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<ITokenService, BearerJwtTokenService>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IMembershipRepository, MembershipRepository>();
 
         return services;
     }

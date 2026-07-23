@@ -1,6 +1,7 @@
 using System.Reflection;
 using FluentValidation;
 using Iron.Aplication.Usecases.Auth;
+using Iron.Aplication.Usecases.Membership;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Iron.Aplication.DependencyInjection;
@@ -14,6 +15,7 @@ public static class ApplicationExtensions
         services.AddScoped<CreateUserUsecase>();
         services.AddScoped<AuthUserUsecase>();
         services.AddScoped<RefreshTokenUsecase>();
+        services.AddScoped<GetUserMembershipsUsecase>();
 
         return services;
     }
